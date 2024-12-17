@@ -5,8 +5,14 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { aeonik } from '../fonts'
+import dynamic from 'next/dynamic'
 
-export default function Register() {
+// Dynamically import the component with no SSR
+const Register = dynamic(() => Promise.resolve(RegisterComponent), {
+  ssr: false,
+})
+
+function RegisterComponent() {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -213,4 +219,7 @@ export default function Register() {
       </div>
     </div>
   )
-} 
+}
+
+// Export the wrapped component
+export default Register 
